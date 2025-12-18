@@ -1,279 +1,190 @@
-<!doctype html>
-<html lang="th">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ฟอร์มสมัคร</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap');
+@extends('template.default')
 
-    body{
-      font-family:'Prompt', sans-serif;
-      background:linear-gradient(135deg,#dbeafe,#f5d0fe);
-      padding:40px;
-    }
+@section('title','Workshop Form')
 
-    .card{
-      max-width:820px;
-      margin:0 auto;
-      background:#ffffffcc;
-      backdrop-filter:blur(12px);
-      border-radius:22px;
-      padding:34px;
-      box-shadow:0 12px 32px rgba(0,0,0,0.08);
-      animation:fadeIn .5s ease;
-    }
+@section('content')
+<h1 class="mb-4">WORKSHOP # HTML - FORM</h1>
 
-    @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
+<form id="workshopForm" novalidate>
 
-    h1{
-      font-size:28px;
-      font-weight:600;
-      color:#1e293b;
-      margin-bottom:4px;
-    }
-
-    p.lead{
-      margin-top:0;
-      margin-bottom:24px;
-      color:#475569;
-      font-size:15px;
-    }
-
-    form{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
-      gap:18px;
-    }
-
-    label{
-      font-size:14px;
-      font-weight:500;
-      margin-bottom:6px;
-      display:block;
-      color:#334155;
-    }
-
-    input[type="text"], input[type="date"], input[type="file"], select, textarea, input[type="color"]{
-      width:100%;
-      padding:10px 14px;
-      border:1px solid #cbd5e1;
-      border-radius:12px;
-      background:#f8fafc;
-      transition:0.25s;
-      font-size:15px;
-    }
-
-    input:focus, textarea:focus{
-      border-color:#6366f1;
-      background:white;
-      box-shadow:0 0 0 3px #c7d2fe;
-      outline:none;
-    }
-
-    textarea{
-      min-height:90px;
-      resize:vertical;
-    }
-
-    .full{ grid-column:1/-1; }
-
-    .gender, .genres{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      font-size:15px;
-    }
-
-    .consent{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:14px;
-      background:#f1f5f9;
-      border-radius:14px;
-      border:1px solid #e2e8f0;
-    }
-
-    .preview img{
-      width:90px;
-      height:90px;
-      border-radius:14px;
-      object-fit:cover;
-      border:1px solid #cbd5e1;
-      box-shadow:0 3px 6px rgba(0,0,0,0.1);
-    }
-
-    .actions{
-      grid-column:1/-1;
-      display:flex;
-      justify-content:flex-end;
-      gap:14px;
-      margin-top:10px;
-    }
-
-    button{
-      padding:12px 20px;
-      border-radius:14px;
-      border:none;
-      cursor:pointer;
-      font-size:15px;
-      font-weight:600;
-      transition:0.25s;
-    }
-
-    button.reset{
-      background:#e2e8f0;
-      color:#475569;
-    }
-    button.reset:hover{
-      background:#cbd5e1;
-    }
-
-    button.save{
-      background:#6366f1;
-      color:white;
-      box-shadow:0 4px 12px rgba(99,102,241,0.4);
-    }
-    button.save:hover{
-      background:#4f46e5;
-      box-shadow:0 6px 16px rgba(99,102,241,0.55);
-    }
-
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1>Workshop #HTML - FORM</h1>
-
-    <form id="regForm">
-      <div>
-        <label for="fname">ชื่อ</label>
-        <input id="fname" name="fname" type="text">
-      </div>
-
-      <div>
-        <label for="lname">สกุล</label>
-        <input id="lname" name="lname" type="text" >
-      </div>
-
-      <div>
-        <label for="dob">วัน/เดือน/ปีเกิด</label>
-        <input id="dob" name="dob" type="date" >
-      </div>
-
-      <div>
-        <label>เพศ</label>
-        <div class="gender">
-          <label><input type="radio" name="gender" value="ชาย" required> ชาย</label>
-          <label><input type="radio" name="gender" value="หญิง"> หญิง</label>
-          <label><input type="radio" name="gender" value="อื่นๆ"> อื่นๆ</label>
+    <!-- ชื่อ / สกุล -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label class="form-label">ชื่อ</label>
+            <input type="text" id="fname" class="form-control">
+            <div class="invalid-feedback">กรุณากรอกชื่อ</div>
         </div>
-      </div>
 
-      <div class="full">
-        <label for="photo">รูป (อัพโหลด)</label>
-        <input id="photo" name="photo" type="file" accept="image/*">
-        <div class="preview small" id="photoPreview" style="margin-top:8px;display:none"><img id="photoImg" alt="preview"><div class="small">ตัวอย่างรูป</div></div>
-      </div>
-
-      <div class="full">
-        <label for="address">ที่อยู่</label>
-        <textarea id="address" name="address" ></textarea>
-      </div>
-
-      <div>
-        <label for="color">สีที่ชอบ</label>
-        <input id="color" name="color" type="color" value="#2563eb">
-      </div>
-
-      <div>
-        <label>แนวเพลงที่ชอบ</label>
-        <div class="genres">
-          <label><input type="checkbox" name="genre" value="ป๊อป"> ป๊อป</label>
-          <label><input type="checkbox" name="genre" value="ร็อก"> ร็อก</label>
-          <label><input type="checkbox" name="genre" value="แจ๊ส"> แจ๊ส</label>
-          <label><input type="checkbox" name="genre" value="คลาสสิก"> คลาสสิก</label>
-          <label><input type="checkbox" name="genre" value="ฮิปฮอป"> ฮิปฮอป</label>
+        <div class="col-md-6">
+            <label class="form-label">สกุล</label>
+            <input type="text" id="lname" class="form-control">
+            <div class="invalid-feedback">กรุณากรอกสกุล</div>
         </div>
-      </div>
+    </div>
 
-      <div class="full consent">
-        <label style="display:flex;align-items:center;gap:8px"><input id="agree" name="agree" type="checkbox" required> ยินยอมให้เก็บข้อมูล </label>
-      </div>
+    <!-- วันเกิด -->
+    <div class="mb-3">
+        <label class="form-label">วัน/เดือน/ปีเกิด</label>
+        <input type="date" id="dob" class="form-control">
+        <div class="invalid-feedback">กรุณาเลือกวันเกิด</div>
+    </div>
 
-      <div class="full actions">
-        <button type="reset" class="reset" id="btnReset">Reset</button>
-        <button type="submit" class="save" id="btnSave">Submit</button>
-      </div>
-    </form>
+    <!-- เพศ -->
+    <div class="mb-3">
+        <label class="form-label">เพศ</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="gender_male" value="ชาย">
+            <label class="form-check-label">ชาย</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="gender_female" value="หญิง">
+            <label class="form-check-label">หญิง</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="gender" id="gender_other" value="อื่นๆ">
+            <label class="form-check-label">อื่นๆ</label>
+        </div>
+        <div class="text-danger small d-none" id="genderError">กรุณาเลือกเพศ</div>
+    </div>
 
-    <div id="message" class="small" style="margin-top:12px;color:green;display:none"></div>
-  </div>
+    <!-- รูป -->
+    <div class="mb-3">
+        <label class="form-label">รูป (อัพโหลด)</label>
+        <input type="file" id="photo" class="form-control" accept="image/*">
+        <div class="invalid-feedback">กรุณาเลือกรูปภาพ</div>
 
-  <script>
-    const photoInput = document.getElementById('photo');
-    const photoPreview = document.getElementById('photoPreview');
-    const photoImg = document.getElementById('photoImg');
-    const form = document.getElementById('regForm');
-    const message = document.getElementById('message');
+        <div id="photoPreview" class="mt-2 d-none">
+            <img id="photoImg" class="img-thumbnail" style="max-width:150px">
+            <div class="small text-muted">ตัวอย่างรูป</div>
+        </div>
+    </div>
 
-    photoInput.addEventListener('change', () => {
-      const file = photoInput.files && photoInput.files[0];
-      if (!file) { photoPreview.style.display = 'none'; return; }
-      const reader = new FileReader();
-      reader.onload = e => {
-        photoImg.src = e.target.result;
-        photoPreview.style.display = 'flex';
-      };
-      reader.readAsDataURL(file);
-    });
+    <!-- ที่อยู่ -->
+    <div class="mb-3">
+        <label class="form-label">ที่อยู่</label>
+        <textarea id="address" class="form-control" rows="3"></textarea>
+        <div class="invalid-feedback">กรุณากรอกที่อยู่</div>
+    </div>
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      // เก็บข้อมูลเป็น object
-      const data = new FormData(form);
-      const obj = {
-        fname: data.get('fname') || '',
-        lname: data.get('lname') || '',
-        dob: data.get('dob') || '',
-        gender: data.get('gender') || '',
-        address: data.get('address') || '',
-        color: data.get('color') || '',
-        genres: data.getAll('genre') || [],
-        agreed: data.get('agree') === 'on'
-      };
+    <!-- สี -->
+    <div class="mb-3">
+        <label class="form-label">สีที่ชอบ</label>
+        <input type="color" id="color" class="form-control form-control-color" value="#2563eb">
+    </div>
 
-      // รูปเก็บเป็น data URL ถ้ามี
-      const file = photoInput.files && photoInput.files[0];
-      if (file) {
+    <!-- แนวเพลง -->
+    <div class="mb-3">
+        <label class="form-label">แนวเพลงที่ชอบ</label>
+        <div class="row">
+            <div class="col-6 form-check">
+                <input class="form-check-input genre" type="checkbox" value="ป๊อป">
+                <label class="form-check-label">ป๊อป</label>
+            </div>
+            <div class="col-6 form-check">
+                <input class="form-check-input genre" type="checkbox" value="ร็อก">
+                <label class="form-check-label">ร็อก</label>
+            </div>
+            <div class="col-6 form-check">
+                <input class="form-check-input genre" type="checkbox" value="แจ๊ส">
+                <label class="form-check-label">แจ๊ส</label>
+            </div>
+            <div class="col-6 form-check">
+                <input class="form-check-input genre" type="checkbox" value="คลาสสิก">
+                <label class="form-check-label">คลาสสิก</label>
+            </div>
+            <div class="col-6 form-check">
+                <input class="form-check-input genre" type="checkbox" value="ฮิปฮอป">
+                <label class="form-check-label">ฮิปฮอป</label>
+            </div>
+        </div>
+        <div class="text-danger small d-none" id="genreError">กรุณาเลือกแนวเพลงอย่างน้อย 1 รายการ</div>
+    </div>
+
+    <!-- ยินยอม -->
+    <div class="mb-3 form-check">
+        <input type="checkbox" id="agree" class="form-check-input">
+        <label class="form-check-label">ยินยอมให้เก็บข้อมูล</label>
+        <div class="text-danger small d-none" id="agreeError">กรุณายินยอมก่อนส่งข้อมูล</div>
+    </div>
+
+    <!-- ปุ่ม -->
+    <div class="d-flex justify-content-between">
+        <button type="reset" class="btn btn-secondary">Reset</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+</form>
+@endsection
+
+@push('scripts')
+<script>
+document.getElementById('workshopForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    let isValid = true;
+
+    const fname = document.getElementById('fname');
+    const lname = document.getElementById('lname');
+    const dob = document.getElementById('dob');
+    const address = document.getElementById('address');
+    const photo = document.getElementById('photo');
+    const agree = document.getElementById('agree');
+
+    // function ตรวจช่อง text
+    function checkInput(input) {
+        if (input.value.trim() === '') {
+            input.classList.add('is-invalid');
+            input.classList.remove('is-valid');
+            isValid = false;
+        } else {
+            input.classList.add('is-valid');
+            input.classList.remove('is-invalid');
+        }
+    }
+
+    checkInput(fname);
+    checkInput(lname);
+    checkInput(address);
+
+    // วันเกิด
+    if (dob.value === '') {
+        dob.classList.add('is-invalid');
+        isValid = false;
+    } else {
+        dob.classList.remove('is-invalid');
+    }
+
+    // เพศ
+    const genderChecked = document.querySelector('input[name="gender"]:checked');
+    document.getElementById('genderError').classList.toggle('d-none', genderChecked);
+    if (!genderChecked) isValid = false;
+
+    // แนวเพลง
+    const genres = document.querySelectorAll('.genre:checked');
+    document.getElementById('genreError').classList.toggle('d-none', genres.length > 0);
+    if (genres.length === 0) isValid = false;
+
+    // ยินยอม
+    document.getElementById('agreeError').classList.toggle('d-none', agree.checked);
+    if (!agree.checked) isValid = false;
+
+    if (isValid) {
+        alert('ส่งข้อมูลเรียบร้อยแล้ว 🎉');
+        // this.submit();
+    }
+});
+
+// preview รูป
+document.getElementById('photo').addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
         const reader = new FileReader();
-        reader.onload = ev => {
-          obj.photo = ev.target.result; // data URL
-          saveToLocal(obj);
-        };
+        reader.onload = function (e) {
+            document.getElementById('photoImg').src = e.target.result;
+            document.getElementById('photoPreview').classList.remove('d-none');
+        }
         reader.readAsDataURL(file);
-      } else {
-        saveToLocal(obj);
-      }
-    });
-
-    function saveToLocal(obj) {
-      // ตัวอย่าง: เก็บไว้ใน localStorage (สำหรับเดโมเท่านั้น)
-      const all = JSON.parse(localStorage.getItem('registrations') || '[]');
-      all.push(Object.assign({savedAt: new Date().toISOString()}, obj));
-      localStorage.setItem('registrations', JSON.stringify(all));
-      message.style.display = 'block';
-      message.textContent = 'บันทึกเรียบร้อย (เก็บไว้ใน localStorage)';
-      form.reset();
-      photoPreview.style.display = 'none';
-      setTimeout(()=>{ message.style.display='none'; }, 4000);
     }
-
-    // ปุ่มรีเซ็ต: ซ่อน preview
-    document.getElementById('btnReset').addEventListener('click', () => {
-      photoPreview.style.display = 'none';
-    });
-  </script>
-</body>
-</html>
+});
+</script>
+@endpush
