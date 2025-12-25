@@ -5,19 +5,20 @@
 @section('content')
 <h1 class="mb-4">WORKSHOP # HTML - FORM</h1>
 
-<form id="workshopForm" novalidate>
+<form id="workshopForm" action="/MyController" method="POST" enctype="multipart/form-data" novalidate>
+    @csrf
 
     <!-- ชื่อ / สกุล -->
     <div class="row mb-3">
         <div class="col-md-6">
             <label class="form-label">ชื่อ</label>
-            <input type="text" id="fname" class="form-control">
+            <input type="text" id="fname" name="fname" class="form-control" required>
             <div class="invalid-feedback">กรุณากรอกชื่อ</div>
         </div>
 
         <div class="col-md-6">
             <label class="form-label">สกุล</label>
-            <input type="text" id="lname" class="form-control">
+            <input type="text" id="lname" name="lname" class="form-control" required>
             <div class="invalid-feedback">กรุณากรอกสกุล</div>
         </div>
     </div>
@@ -25,7 +26,7 @@
     <!-- วันเกิด -->
     <div class="mb-3">
         <label class="form-label">วัน/เดือน/ปีเกิด</label>
-        <input type="date" id="dob" class="form-control">
+        <input type="date" id="dob" name="dob" class="form-control" required>
         <div class="invalid-feedback">กรุณาเลือกวันเกิด</div>
     </div>
 
@@ -33,15 +34,15 @@
     <div class="mb-3">
         <label class="form-label">เพศ</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="gender_male" value="ชาย">
+            <input class="form-check-input" type="radio" name="gender" value="ชาย" required>
             <label class="form-check-label">ชาย</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="gender_female" value="หญิง">
+            <input class="form-check-input" type="radio" name="gender" value="หญิง">
             <label class="form-check-label">หญิง</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="gender" id="gender_other" value="อื่นๆ">
+            <input class="form-check-input" type="radio" name="gender" value="อื่นๆ">
             <label class="form-check-label">อื่นๆ</label>
         </div>
         <div class="text-danger small d-none" id="genderError">กรุณาเลือกเพศ</div>
@@ -50,7 +51,7 @@
     <!-- รูป -->
     <div class="mb-3">
         <label class="form-label">รูป (อัพโหลด)</label>
-        <input type="file" id="photo" class="form-control" accept="image/*">
+        <input type="file" id="photo" name="photo" class="form-control" accept="image/*">
         <div class="invalid-feedback">กรุณาเลือกรูปภาพ</div>
 
         <div id="photoPreview" class="mt-2 d-none">
@@ -62,14 +63,14 @@
     <!-- ที่อยู่ -->
     <div class="mb-3">
         <label class="form-label">ที่อยู่</label>
-        <textarea id="address" class="form-control" rows="3"></textarea>
+        <textarea id="address" name="address" class="form-control" rows="3" required></textarea>
         <div class="invalid-feedback">กรุณากรอกที่อยู่</div>
     </div>
 
     <!-- สี -->
     <div class="mb-3">
         <label class="form-label">สีที่ชอบ</label>
-        <input type="color" id="color" class="form-control form-control-color" value="#2563eb">
+        <input type="color" id="color" name="color" class="form-control form-control-color" value="#2563eb">
     </div>
 
     <!-- แนวเพลง -->
@@ -77,23 +78,23 @@
         <label class="form-label">แนวเพลงที่ชอบ</label>
         <div class="row">
             <div class="col-6 form-check">
-                <input class="form-check-input genre" type="checkbox" value="ป๊อป">
+                <input class="form-check-input genre" type="checkbox" name="genres[]" value="ป๊อป">
                 <label class="form-check-label">ป๊อป</label>
             </div>
             <div class="col-6 form-check">
-                <input class="form-check-input genre" type="checkbox" value="ร็อก">
+                <input class="form-check-input genre" type="checkbox" name="genres[]" value="ร็อก">
                 <label class="form-check-label">ร็อก</label>
             </div>
             <div class="col-6 form-check">
-                <input class="form-check-input genre" type="checkbox" value="แจ๊ส">
+                <input class="form-check-input genre" type="checkbox" name="genres[]" value="แจ๊ส">
                 <label class="form-check-label">แจ๊ส</label>
             </div>
             <div class="col-6 form-check">
-                <input class="form-check-input genre" type="checkbox" value="คลาสสิก">
+                <input class="form-check-input genre" type="checkbox" name="genres[]" value="คลาสสิก">
                 <label class="form-check-label">คลาสสิก</label>
             </div>
             <div class="col-6 form-check">
-                <input class="form-check-input genre" type="checkbox" value="ฮิปฮอป">
+                <input class="form-check-input genre" type="checkbox" name="genres[]" value="ฮิปฮอป">
                 <label class="form-check-label">ฮิปฮอป</label>
             </div>
         </div>
@@ -102,7 +103,7 @@
 
     <!-- ยินยอม -->
     <div class="mb-3 form-check">
-        <input type="checkbox" id="agree" class="form-check-input">
+        <input type="checkbox" id="agree" name="agree" class="form-check-input" required>
         <label class="form-check-label">ยินยอมให้เก็บข้อมูล</label>
         <div class="text-danger small d-none" id="agreeError">กรุณายินยอมก่อนส่งข้อมูล</div>
     </div>
@@ -119,18 +120,14 @@
 @push('scripts')
 <script>
 document.getElementById('workshopForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
     let isValid = true;
 
     const fname = document.getElementById('fname');
     const lname = document.getElementById('lname');
     const dob = document.getElementById('dob');
     const address = document.getElementById('address');
-    const photo = document.getElementById('photo');
     const agree = document.getElementById('agree');
 
-    // function ตรวจช่อง text
     function checkInput(input) {
         if (input.value.trim() === '') {
             input.classList.add('is-invalid');
@@ -168,9 +165,9 @@ document.getElementById('workshopForm').addEventListener('submit', function (e) 
     document.getElementById('agreeError').classList.toggle('d-none', agree.checked);
     if (!agree.checked) isValid = false;
 
-    if (isValid) {
-        alert('ส่งข้อมูลเรียบร้อยแล้ว 🎉');
-        // this.submit();
+    // ถ้าถูกต้อง ให้ submit จริง
+    if (!isValid) {
+        e.preventDefault(); // หยุดส่งถ้าไม่ valid
     }
 });
 

@@ -1,20 +1,28 @@
 <?php
 
-use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-// Determine if the application is in maintenance mode...
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
-    require $maintenance;
-}
-
-// Register the Composer autoloader...
+// โหลด autoload ของ Composer
 require __DIR__.'/../vendor/autoload.php';
 
-// Bootstrap Laravel and handle the request...
-/** @var Application $app */
+// โหลด bootstrap/app.php เพื่อสร้าง Application instance
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-$app->handleRequest(Request::capture());
+/** @var Kernel $kernel */
+// เรียกใช้งาน HTTP Kernel
+$kernel = $app->make(Kernel::class);
+
+// สร้าง Request จาก global PHP variables ($_GET, $_POST, $_FILES, etc.)
+$request = Request::capture();
+
+// ประมวลผล Request และรับ Response
+$response = $kernel->handle($request);
+
+// ส่ง Response กลับไปยัง browser
+$response->send();
+
+// Terminate request (cleanup, middleware, etc.)
+$kernel->terminate($request, $response);

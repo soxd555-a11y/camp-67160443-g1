@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MyController;
 
 Route::get('/', function () {
 
@@ -8,5 +9,9 @@ Route::get('/', function () {
 });
 
 Route::get('/html101', function () {
-    return view('template.default');
+    return view('template.default',);
 });
+
+
+Route::get('/MyController', [MyController::class, 'index']);
+Route::post('/MyController', [MyController::class, 'store']);
