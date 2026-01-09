@@ -19,7 +19,7 @@
   <div class="card shadow">
     <div class="card-body">
 
-      <h1> file defult </h1>
+      <h1>  </h1>
       @yield('content')
 
 
