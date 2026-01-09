@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title> HTML - @yield('title')</title>
-  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="{{url('css/bootstrap.css')}}" rel="stylesheet">
    <style>
     body {
       background: linear-gradient(135deg, #60a5fa, #c084fc);

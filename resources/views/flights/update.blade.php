@@ -1,7 +1,7 @@
 @extends('template.default')
 
 @section('content')
-<h1>POKEDEX</h1>
+<h1>Flight Create</h1>
 
 <form action="{{ url('/flights') }}" method="post" enctype="multipart/form-data">
     @csrf
@@ -14,12 +14,11 @@
     <input type="number" name="hp" placeholder="HP">
     <input type="number" name="attack" placeholder="การโจมตี">
     <input type="number" name="defense" placeholder="การป้องกัน">
+
     <input type="file" name="image">
 
-    <button type="submit">บันทึก</button>
+    <button class="btn btn-primary" type="submit">บันทึก</button>
 </form>
 
-<hr>
-
 @include('flights.table')
-
+@endsection
