@@ -15,3 +15,6 @@ Route::get('/html101', function () {
 
 Route::get('/MyController', [MyController::class, 'index']);
 Route::post('/MyController', [MyController::class, 'store']);
+
+
+Route::resource('/flights', App\Http\Controllers\FlightController::class);
